@@ -20,13 +20,24 @@ public class Book {
     @Column(nullable = false, length = 45)
     private String title;
 
-    @Column(nullable = false, length = 45)
-    private String subTitle;
+    @Column()
+    private String summary;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @Column(length = 45)
     private String author;
 
+    @Column(length = 45)
+    private String publisher;
+
+    @Column()
+    private String coverImg;
+
+    @Enumerated(EnumType.STRING)
+    private Genre genre;
+
+    public enum Genre{
+        FANTASY, SF, THRILLER, ROMANCE, MYSTERY, ESSAY, HISTORY
+    }
 //    @Column(length = 45)
 //    private String publisher;
 //

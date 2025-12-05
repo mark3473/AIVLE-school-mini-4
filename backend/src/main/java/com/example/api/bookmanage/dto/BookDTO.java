@@ -1,6 +1,8 @@
 package com.example.api.bookmanage.dto;
 
 import com.example.api.bookmanage.domain.Book;
+import com.example.api.bookmanage.domain.Book.Genre;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -22,16 +24,15 @@ public class BookDTO {
         @Size(min = 1, max = 45, message = "제목은 45자 이하여야 합니다.")
         private String title;
 
-        @NotBlank
-        @NotNull
-        @Size(max = 45)
-        private String subTitle;
-
-        @Size(max = 45)
+        @Column(length = 45)
         private String author;
 
-        @Size(max = 45)
+        @Column(length = 45)
         private String publisher;
+
+        private String summary;
+        private Genre genre;
+        private String coverImg;
     }
 
     @Getter
@@ -45,18 +46,15 @@ public class BookDTO {
         @Size(min = 1, max = 45, message = "제목은 45자 이하여야 합니다.")
         private String title;
 
-        @NotBlank
-        @NotNull
-        @Size(max = 45)
-        private String subTitle;
-
-        @Size(max = 45)
+        @Column(length = 45)
         private String author;
 
-        @Size(max = 45)
+        @Column(length = 45)
         private String publisher;
 
-        private Book.Status status;
+        private String summary;
+        private Genre genre;
+        private String coverImg;
     }
 
     @Getter
@@ -64,7 +62,7 @@ public class BookDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Patch {
-        private Book.Status status;
+        private Genre genre;
     }
 
     @Getter
@@ -75,7 +73,9 @@ public class BookDTO {
         private Long id;
         private String title;
         private String author;
-        private String publisher;
-        private Book.Status status;
+        private String pulbisher;
+        private String summary;
+        private String coverImg;
+        private Genre genre;
     }
 }

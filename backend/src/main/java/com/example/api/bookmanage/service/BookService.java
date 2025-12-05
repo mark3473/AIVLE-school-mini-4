@@ -1,6 +1,7 @@
 package com.example.api.bookmanage.service;
 
 import com.example.api.bookmanage.domain.Book;
+import com.example.api.bookmanage.domain.Book.Genre;
 import com.example.api.bookmanage.repository.BookRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +24,10 @@ public class BookService {
     public Book updateBook(Long id, Book book) {
         Book b = getBook(id);
         b.setTitle(book.getTitle());
-        b.setSubTitle(book.getSubTitle());
+        b.setSummary(book.getSummary());
         b.setAuthor(book.getAuthor());
         b.setPublisher(book.getPublisher());
-        b.setStatus(book.getStatus());
+        b.setGenre(book.getGenre());
         return bookRepository.save(b);
     }
 
@@ -36,18 +37,18 @@ public class BookService {
     }
 
     //책을 업데이트(PATCH)
-    public Book updateBook(Long id, Book.Status status) {
+    public Book updateBook(Long id, Genre genre) {
         Book b = getBook(id);
-        b.setStatus(status);
+        b.setGenre(genre);
         return bookRepository.save(b);
     }
 
     //책을 삭제하고
     public void deleteBook(Long id) {
         Book b = getBook(id);
-        if(b.getStatus() == Book.Status.BORROWED) {
-            throw new IllegalArgumentException("대출 중인 책은 삭제할 수 없습니다.");
-        }
+//        if(b.getStatus() == Book.Status.BORROWED) {
+//            throw new IllegalArgumentException("대출 중인 책은 삭제할 수 없습니다.");
+//        }
         bookRepository.delete(b);
     }
     //책을 조회하고(단건)
