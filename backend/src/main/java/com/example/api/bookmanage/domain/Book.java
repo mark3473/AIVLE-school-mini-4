@@ -20,9 +20,11 @@ public class Book {
     @Column(nullable = false, length = 45)
     private String title;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column()
+    private String author;
+
+    @Column(length = 45)
+    private String publisher;
 
     @Column()
     private String summary;
@@ -37,18 +39,6 @@ public class Book {
         FANTASY, SF, ROMANCE, MYSTERY, THRILLER, ESSAY, BUSINESS, SCIENCE, ART
     }
 
-    @Column(length = 45)
-    private String publisher;
-
-    @Column()
-    private String coverImg;
-
-    @Enumerated(EnumType.STRING)
-    private Genre genre;
-
-    public enum Genre{
-        FANTASY, SF, THRILLER, ROMANCE, MYSTERY, ESSAY, HISTORY
-    }
 //    @Column(length = 45)
 //    private String publisher;
 //
