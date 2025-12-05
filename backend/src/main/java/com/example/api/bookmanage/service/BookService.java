@@ -2,6 +2,7 @@ package com.example.api.bookmanage.service;
 
 import com.example.api.bookmanage.domain.Book;
 import com.example.api.bookmanage.domain.Book.Genre;
+import com.example.api.bookmanage.dto.BookDTO;
 import com.example.api.bookmanage.repository.BookRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -61,4 +62,17 @@ public class BookService {
         return bookRepository.findAll();
     }
 
+    public List<BookDTO.Response> searchBooks(String title, String author, Genre genre){
+        List<Book> books = bookRepository.searchBooks(title, author, genre);
+
+        return books.stream().map(book -> new BookDTO.Response(
+                book.getId(),
+                book.getTitle(),
+                book.getAuthor(),
+                book.getPublisher(),
+                book.getSummary(),
+                book.getCoverImg(),
+                book.getGenre()
+        )).toList();
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.api.bookmanage.controller;
 
 import com.example.api.bookmanage.domain.Book;
+import com.example.api.bookmanage.dto.BookDTO;
 import com.example.api.bookmanage.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -50,12 +51,12 @@ public class BookController {
     }
 
     // 제목, 작가, 장르 별 키워드로 검색하기
-//    @GetMapping("/search")
-//    public List<Book> searchBooks(
-//            @RequestParam(required = false) String title,
-//            @RequestParam(required = false) String author,
-//            @RequestParam(required = false) Book.Genre genre
-//    ){
-//        return bookService.searchBooks(title, author, genre);
-//    }
+    @GetMapping("/search")
+    public List<BookDTO.Response> searchBooks(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String author,
+            @RequestParam(required = false) Book.Genre genre
+    ){
+        return bookService.searchBooks(title, author, genre);
+    }
 }

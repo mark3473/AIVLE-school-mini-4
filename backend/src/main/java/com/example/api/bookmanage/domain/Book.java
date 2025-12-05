@@ -38,6 +38,7 @@ public class Book {
     public enum Genre{
         FANTASY, SF, THRILLER, ROMANCE, MYSTERY, ESSAY, HISTORY
     }
+
 //    @Column(length = 45)
 //    private String publisher;
 //
