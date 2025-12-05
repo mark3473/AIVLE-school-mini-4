@@ -28,4 +28,12 @@ public class UserController {
         User loggedInUser = userService.login(request.getLoginId(), request.getPassword());
         return ResponseEntity.ok(new UserResponse(loggedInUser.getId(), loggedInUser.getLoginId()));
     }
+
+    @PutMapping("/users/{userId}")
+    public ResponseEntity<UserResponse> updateUser(@PathVariable Long userId,
+                                              @RequestBody UserRequest dto) {
+        User updatedUser = userService.updateUser(userId, dto.getLoginId(), dto.getPassword());
+        return ResponseEntity.ok(new UserResponse(updatedUser.getId(), updatedUser.getLoginId()));
+    }
+
 }
