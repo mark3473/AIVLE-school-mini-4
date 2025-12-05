@@ -12,5 +12,5 @@ public interface UserRepository  extends JpaRepository<User, Long> {
     Optional<User> findByLoginId(String loginId);
 
     // 아이디 중복 조회
-    boolean existByLoginId(String loginId);
+    boolean existsByLoginId(String loginId);
 }

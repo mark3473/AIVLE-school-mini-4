@@ -26,7 +26,7 @@ public class UserService {
     @Transactional
     public User registerUser(String loginId, String password) {
         if (password.length() < 8) throw new IllegalArgumentException("비밀번호는 최소 8글자 이상이어야 합니다.");
-        if (userRepository.existByLoginId(loginId)) throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
+        if (userRepository.existsByLoginId(loginId)) throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
 
         User user = new User();
         user.setLoginId(loginId);
