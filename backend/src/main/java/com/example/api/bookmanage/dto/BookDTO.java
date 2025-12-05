@@ -1,6 +1,7 @@
 package com.example.api.bookmanage.dto;
 
 import com.example.api.bookmanage.domain.Book;
+import com.example.api.bookmanage.domain.Book.Genre;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -25,13 +26,11 @@ public class BookDTO {
         @NotBlank
         @NotNull
         @Size(max = 45)
-        private String subTitle;
+        private Long userId;
 
-        @Size(max = 45)
-        private String author;
-
-        @Size(max = 45)
-        private String publisher;
+        private String summary;
+        private String coverImg;
+        private Genre genre;
     }
 
     @Getter
@@ -48,15 +47,11 @@ public class BookDTO {
         @NotBlank
         @NotNull
         @Size(max = 45)
-        private String subTitle;
+        private Long userId;
 
-        @Size(max = 45)
-        private String author;
-
-        @Size(max = 45)
-        private String publisher;
-
-        private Book.Status status;
+        private String summary;
+        private String coverImg;
+        private Genre genre;
     }
 
     @Getter
@@ -64,7 +59,7 @@ public class BookDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Patch {
-        private Book.Status status;
+        private Genre genre;
     }
 
     @Getter
@@ -75,7 +70,8 @@ public class BookDTO {
         private Long id;
         private String title;
         private String author;
-        private String publisher;
-        private Book.Status status;
+        private String summary;
+        private String coverImg;
+        private Genre genre;
     }
 }
