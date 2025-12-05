@@ -11,29 +11,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Book {
-
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, length = 45)
-    private String title;
+    private String loginId;
 
     @Column(nullable = false, length = 45)
-    private String subTitle;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private String author;
-
-//    @Column(length = 45)
-//    private String publisher;
-//
-//    @Enumerated(EnumType.STRING)
-//    private Status status;
-//
-//    public enum Status{
-//        BORROWED, AVAILABLE
-//    }
+    private String password;
 }
