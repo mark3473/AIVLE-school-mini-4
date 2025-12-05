@@ -48,4 +48,14 @@ public class BookController {
     public void deleteBook(@PathVariable("bookId") Long id) {
         bookService.deleteBook(id);
     }
+
+    // 제목, 작가, 장르 별 키워드로 검색하기
+//    @GetMapping("/search")
+//    public List<Book> searchBooks(
+//            @RequestParam(required = false) String title,
+//            @RequestParam(required = false) String author,
+//            @RequestParam(required = false) Book.Genre genre
+//    ){
+//        return bookService.searchBooks(title, author, genre);
+//    }
 }
