@@ -1,3 +1,37 @@
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import MainPage from './pages/MainPage';  // 회원가입 페이지
+import LoginPage from './pages/LoginPage';  // 로그인 페이지
+import NewBookPage from './pages/NewBookPage';  // 도서 등록 페이지
+import BookDetailPage from './pages/BookDetailPage';  // 도서 상세 페이지
+import BookListPage from './pages/BookListPage';  // 도서 목록 페이지
+
+function App() {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<MainPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/new-book" element={<NewBookPage />} />
+                <Route path="/book/:id" element={<BookDetailPage />} />
+                <Route path="/books" element={<BookListPage />} />
+            </Routes>
+        </Router>
+    );
+}
+
+export default App;
+
+
+
+
+
+
+
+
+
+/*
+백엔드 연동 확인 코드
 import { useState, useEffect } from 'react'
 import axios from 'axios';
 import reactLogo from './assets/react.svg'
@@ -43,10 +77,10 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
 
-        {/* 백엔드에서 받은 응답 메시지 표시 */}
+        //백엔드에서 받은 응답 메시지 표시
         <div>
             <h2>백엔드 메시지:</h2>
-            <p>{message}</p>  {/* API 응답 메시지를 화면에 출력 */}
+            <p>{message}</p>  // API 응답 메시지를 화면에 출력
         </div>
 
 
@@ -55,3 +89,4 @@ function App() {
 }
 
 export default App
+*/
