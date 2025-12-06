@@ -3,6 +3,7 @@ package com.example.api.bookmanage.service;
 import com.example.api.bookmanage.domain.Book;
 import com.example.api.bookmanage.domain.Book.Genre;
 import com.example.api.bookmanage.dto.BookDTO;
+import com.example.api.bookmanage.exception.BookNotFoundException;
 import com.example.api.bookmanage.repository.BookRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +35,7 @@ public class BookService {
 
     private Book getBook(Long id) {
         return bookRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 책입니다."));
+                .orElseThrow(() -> new BookNotFoundException("존재하지 않는 책입니다."));
     }
 
     //책을 업데이트(PATCH)
