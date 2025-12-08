@@ -13,16 +13,17 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class BookService {
 
     private final BookRepository bookRepository;
 
     //책을 등록
+    @Transactional
     public Book insertBook(Book book) {
         return bookRepository.save(book);
     }
     //책을 업데이트(PUT)
+    @Transactional
     public Book updateBook(Long id, Book book) {
         Book b = getBook(id);
         b.setTitle(book.getTitle());
@@ -38,7 +39,8 @@ public class BookService {
                 .orElseThrow(() -> new BookNotFoundException("존재하지 않는 책입니다."));
     }
 
-    //책을 업데이트(PATCH)
+    //책 장르만 업데이트(PATCH)
+    @Transactional
     public Book updateBook(Long id, Genre genre) {
         Book b = getBook(id);
         b.setGenre(genre);
@@ -46,6 +48,7 @@ public class BookService {
     }
 
     //책을 삭제하고
+    @Transactional
     public void deleteBook(Long id) {
         Book b = getBook(id);
 //        if(b.getStatus() == Book.Status.BORROWED) {
