@@ -33,7 +33,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    // 비밀번호 수정
+    // 비밀번호 변경
     @PutMapping("/users/{loginId}")
     public ResponseEntity<UserDTO.Response> updatePassword(
             @PathVariable String loginId,

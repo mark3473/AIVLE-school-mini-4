@@ -23,6 +23,10 @@ public class UserService {
         String loginId = request.getLoginId();
         String password = request.getPassword();
 
+        if (userRepository.findByLoginId(loginId).isPresent()) {
+            throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
+        }
+
         if (password.length() < 8) {
             throw new IllegalArgumentException("비밀번호는 최소 8글자 이상이어야 합니다.");
         }
@@ -45,9 +49,14 @@ public class UserService {
         User user = userRepository.findByLoginId(loginId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
-        if (!passwordEncoder.matches(password,user.getPassword())) { // 단순 문자열 비교
+        if (!passwordEncoder.matches(password,user.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
         }
+
+        System.out.println("입력 패스워드: " + password);
+        System.out.println("DB 암호화 패스워드: " + user.getPassword());
+        System.out.println("matches 결과: " + passwordEncoder.matches(password, user.getPassword()));
+
 
         return new UserDTO.Response(user.getLoginId(), "Login Successful");
     }
