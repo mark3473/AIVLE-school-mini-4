@@ -21,7 +21,6 @@ function App() {
             <Routes>
                 <Route path="/" element={<MainPage />} />
                 <Route path="/login" element={<LoginPage />} />
-
                 <Route element={<Layout />}>
                     <Route path="/books" element={<BookListPage books={books} setBooks={setBooks} />} />
                     <Route path="/search" element={<SearchPage />} />

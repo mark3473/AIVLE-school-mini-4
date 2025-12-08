@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: row;
     min-height: 100vh;
+    min-width: 0;
     background-color: #f4f7fc;
     font-family: Arial, sans-serif;
 }

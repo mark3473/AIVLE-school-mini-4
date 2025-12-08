@@ -4,7 +4,7 @@ import { TextField, Button, Box, Typography } from '@mui/material';
 
 function LoginPage() {
     const [loginData, setLoginData] = useState({
-        username: '',
+        loginId: '',
         password: ''
     });
     const navigate = useNavigate();
@@ -17,15 +17,43 @@ function LoginPage() {
         }));
     };
 
-    const handleLoginSubmit = (e) => {
+    // const handleLoginSubmit = (e) => {
+    //     e.preventDefault();
+    //     // 로그인 검증 (아이디는 admin, 비밀번호는 1234)
+    //     if (loginData.loginId === 'admin' && loginData.password === '1234') {
+    //         navigate('/new-book');  // 도서 등록 페이지로 이동
+    //     } else {
+    //         alert('로그인 실패');
+    //     }
+    // };
+
+    const handleLoginSubmit = async (e) => {
         e.preventDefault();
-        // 로그인 검증 (아이디는 admin, 비밀번호는 1234)
-        if (loginData.username === 'admin' && loginData.password === '1234') {
-            navigate('/new-book');  // 도서 등록 페이지로 이동
-        } else {
-            alert('로그인 실패');
+
+        try {
+            const response = await fetch("http://localhost:8080/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(loginData)
+            });
+
+            if (!response.ok) {
+                throw new Error("로그인 실패");
+            }
+
+            const result = await response.json();
+            console.log("로그인 성공:", result);
+
+            navigate('/new-book'); // 로그인 성공 후 이동
+
+        } catch (error) {
+            console.error("에러 발생:", error);
+            alert("아이디 또는 비밀번호가 틀렸습니다.");
         }
     };
+
 
     return (
         <div style={{ padding: '20px' }}>
@@ -34,8 +62,8 @@ function LoginPage() {
                 <form onSubmit={handleLoginSubmit}>
                     <TextField
                         label="아이디"
-                        name="username"
-                        value={loginData.username}
+                        name="loginId"
+                        value={loginData.loginId}
                         onChange={handleChange}
                         fullWidth
                         required
