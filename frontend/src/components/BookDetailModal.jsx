@@ -25,7 +25,7 @@ function BookDetailModal({ book, onClose }) {
             <Typography variant="body2" gutterBottom>출판사: {book.publisher}</Typography>
             <Typography variant="body2" gutterBottom>ISBN: {book.isbn}</Typography>
             <Typography variant="body2" gutterBottom>장르: {book.genre}</Typography>
-            <Typography variant="body1" gutterBottom>줄거리: {book.description || "줄거리 정보 없음"}</Typography>
+            <Typography variant="body1" gutterBottom>줄거리: {book.summary || "줄거리 정보 없음"}</Typography>
             <Box mt={2} textAlign="right">
                 <Button variant="contained" onClick={onClose}>닫기</Button>
             </Box>

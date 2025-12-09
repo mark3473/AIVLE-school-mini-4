@@ -16,7 +16,7 @@ function EditBookPage({ books, setBooks }) {
     const [formData, setFormData] = useState({
         title: '',
         author: '',
-        description: '',
+        summary: '',
         genre: '',
         publisher: ''
     });
@@ -29,7 +29,7 @@ function EditBookPage({ books, setBooks }) {
             setFormData({
                 title: bookToEdit.title,
                 author: bookToEdit.author,
-                description: bookToEdit.description,
+                summary: bookToEdit.summary,
                 genre: bookToEdit.genre,
                 publisher: bookToEdit.publisher
             });
@@ -111,7 +111,7 @@ function EditBookPage({ books, setBooks }) {
                 <form onSubmit={handleSubmit}>
                     <TextField label="도서 제목" name="title" value={formData.title} onChange={handleChange} fullWidth required margin="normal" />
                     <TextField label="작가 이름" name="author" value={formData.author} onChange={handleChange} fullWidth required margin="normal" />
-                    <TextField label="도서 줄거리" name="description" value={formData.description} onChange={handleChange} fullWidth required margin="normal" multiline rows={4} />
+                    <TextField label="도서 줄거리" name="summary" value={formData.summary} onChange={handleChange} fullWidth required margin="normal" multiline rows={4} />
                     <TextField label="출판사" name="publisher" value={formData.publisher} onChange={handleChange} fullWidth required margin="normal" />
                     <FormControl fullWidth margin="normal">
                         <Select label="장르 선택" name="genre" value={formData.genre} onChange={handleChange} required>
