@@ -40,6 +40,19 @@ function BookListPage() {
         setSelectedBook(null);
     };
 
+    const handleDelete = (bookId) => {
+        axios.delete(`/api/books/${bookId}`)
+            .then(response => {
+                console.log("삭제 성공:", response.data);
+                setBooks(prev => prev.filter(b => b.id !== bookId));
+                closeModal();
+            })
+            .catch(err => {
+                console.error("삭제 실패:", err);
+                alert("삭제에 실패했습니다. 다시 시도해주세요.");
+            });
+    };
+
     return (
         <Box sx={{ width: "100%" }}>
             {/* 중앙 컨텐츠 */}
@@ -79,7 +92,11 @@ function BookListPage() {
             </Container>
 
             <Modal open={isModalOpen} onClose={closeModal}>
-                <BookDetailModal book={selectedBook} onClose={closeModal} />
+                <BookDetailModal
+                    book={selectedBook}
+                    onClose={closeModal}
+                    onDelete={handleDelete}
+                />
             </Modal>
         </Box>
     );

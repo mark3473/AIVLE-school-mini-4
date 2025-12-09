@@ -3,6 +3,9 @@
     background-color: whitesmoke;
     overflow: hidden;
     border-radius: 10px;
+    width: 100%;
+    min-width: 350px;
+    max-width: 400px;
 }
 
 .book-card:hover {
@@ -50,16 +53,15 @@
     color: #333;           /* 다른 텍스트와 색상 통일 */
 }
 
-/* 출판사, ISBN, 장르 */
+/* 출판사, 장르 */
 .book-info .publisher,
-.book-info .isbn,
 .book-info .genre {
     font-weight: normal;   /* 기본 폰트 */
     color: #333;           /* 진한 회색으로 통일 */
 }
 
 /* 줄거리(description) */
-.book-info .description {
+.book-info .summary {
     font-weight: normal;
     color: #333;           /* 모든 텍스트와 동일하게 */
     margin-top: 10px;
