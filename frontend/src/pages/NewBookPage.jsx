@@ -16,6 +16,12 @@ function NewBookPage({ addNewBook }) {
     const [generatedCoverImage, setGeneratedCoverImage] = useState(null); // 생성된 표지 이미지 URL
     const [isGenerating, setIsGenerating] = useState(false); // 이미지 생성 중인지 여부
     const [coverGenerationError, setCoverGenerationError] = useState(''); // 에러 메시지
+
+    // 모델, 품질, 스타일 상태 추가
+    const [selectedModel, setSelectedModel] = useState('dall-e-3');
+    const [selectedQuality, setSelectedQuality] = useState('high');
+    const [selectedStyle, setSelectedStyle] = useState('realistic');
+
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -26,7 +32,12 @@ function NewBookPage({ addNewBook }) {
         }));
     };
 
-    // API 키 입력 후 표지 생성 호출
+    // 모델, 품질, 스타일 선택 핸들러
+    const handleModelChange = (e) => setSelectedModel(e.target.value);
+    const handleQualityChange = (e) => setSelectedQuality(e.target.value);
+    const handleStyleChange = (e) => setSelectedStyle(e.target.value);
+
+    // API 호출 및 이미지 URL 처리
     const handleGenerateCover = async () => {
         if (!userApiKey) {
             alert('API 키를 입력해주세요.');
@@ -37,8 +48,21 @@ function NewBookPage({ addNewBook }) {
         setCoverGenerationError(''); // 오류 초기화
 
         try {
-            // 도서 제목, 줄거리, 장르를 기반으로 prompt 생성
-            const prompt = `${formData.title}의 책 표지를 생성해 주세요. 줄거리: ${formData.summary}, 장르: ${formData.genre}, 스타일: realistic, 품질: high`;
+            // 도서 제목, 줄거리, 장르를 기반으로 프롬프트 생성
+            const prompt = `
+        당신은 도서 관리 시스템에서 책 표지를 생성하는 전문가입니다.
+        다음은 사용자가 제공한 도서 정보입니다. 이 정보를 바탕으로 도서의 특성에 맞는 책 표지 이미지를 생성해주세요.
+
+        - **제목**: ${formData.title}
+        - **줄거리**: ${formData.summary}
+        - **장르**: ${formData.genre}
+
+        추가적으로, 아래의 설정을 적용하여 책 표지를 생성해주세요:
+        - **모델**: ${selectedModel}
+        - **스타일**: ${selectedStyle}
+        - **품질**: ${selectedQuality}
+
+        이 정보를 바탕으로 도서의 느낌에 잘 맞는 창의적인 표지를 디자인해 주세요. 표지는 하나의 대표 이미지로 생성해 주시기 바랍니다.`;
 
             const response = await fetch('https://api.openai.com/v1/images/generations', {
                 method: 'POST',
@@ -47,7 +71,7 @@ function NewBookPage({ addNewBook }) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    model: 'dall-e-2',  // 사용하려는 모델 설정
+                    model: selectedModel,  // 사용자가 선택한 모델
                     prompt,
                     n: 1,
                     size: '1024x1024',
@@ -100,6 +124,16 @@ function NewBookPage({ addNewBook }) {
 
     const handleGoBack = () => {
         navigate(-1); // 이전 페이지로 돌아가기
+    };
+
+    // 이미지를 로컬에 저장하는 함수
+    const handleDownloadImage = (imageUrl) => {
+        const a = document.createElement('a');
+        a.href = imageUrl;
+        a.download = 'book_cover.png';  // 원하는 파일명
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
     };
 
     return (
@@ -218,6 +252,47 @@ function NewBookPage({ addNewBook }) {
                         fullWidth
                         margin="normal"
                     />
+
+                    {/* 모델, 품질, 스타일 선택 */}
+                    <FormControl fullWidth margin="normal">
+                        <InputLabel>모델 선택</InputLabel>
+                        <Select
+                            value={selectedModel}
+                            onChange={handleModelChange}
+                        >
+                            <MenuItem value="dall-e-3">DALL-E 3</MenuItem>
+                            <MenuItem value="dall-e-2">DALL-E 2</MenuItem>
+                            <MenuItem value="gpt-image-1">GPT Image-1</MenuItem>
+                        </Select>
+                    </FormControl>
+
+                    <FormControl fullWidth margin="normal">
+                        <InputLabel>품질</InputLabel>
+                        <Select
+                            value={selectedQuality}
+                            onChange={handleQualityChange}
+                        >
+                            <MenuItem value="high">High</MenuItem>
+                            <MenuItem value="medium">Medium</MenuItem>
+                            <MenuItem value="low">Low</MenuItem>
+                        </Select>
+                    </FormControl>
+
+                    <FormControl fullWidth margin="normal">
+                        <InputLabel>스타일</InputLabel>
+                        <Select
+                            value={selectedStyle}
+                            onChange={handleStyleChange}>
+
+                            <MenuItem value="abstract">Abstract</MenuItem>
+                            <MenuItem value="realistic">Realistic</MenuItem>
+                            <MenuItem value="fantasy">Fantasy</MenuItem>
+                            <MenuItem value="cartoon">Cartoon</MenuItem>
+                            <MenuItem value="vintage">Vintage</MenuItem>
+                            <MenuItem value="pop art">Pop Art</MenuItem>
+                        </Select>
+                    </FormControl>
+
                     <Button
                         variant="contained"
                         color="primary"
@@ -239,7 +314,6 @@ function NewBookPage({ addNewBook }) {
                         </div>
                     )}
 
-                    {/* "다시 생성"과 "확인" 버튼 추가 */}
                     <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between' }}>
                         <Button
                             variant="outlined"
@@ -248,6 +322,17 @@ function NewBookPage({ addNewBook }) {
                         >
                             다시 생성
                         </Button>
+
+                        {/* 이미지 다운로드 버튼 추가 */}
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() => handleDownloadImage(generatedCoverImage)} // 다운로드 함수 실행
+                            disabled={isGenerating} // 이미지 생성 중일 경우 비활성화
+                        >
+                            이미지 다운로드
+                        </Button>
+
                         <Button
                             variant="contained"
                             color="primary"
@@ -265,14 +350,3 @@ function NewBookPage({ addNewBook }) {
 }
 
 export default NewBookPage;
-
-
-
-
-
-
-
-
-
-
-
