@@ -31,6 +31,7 @@ public class BookService {
         b.setAuthor(book.getAuthor());
         b.setPublisher(book.getPublisher());
         b.setGenre(book.getGenre());
+        b.setCoverImg(book.getCoverImg());
         return bookRepository.save(b);
     }
 
