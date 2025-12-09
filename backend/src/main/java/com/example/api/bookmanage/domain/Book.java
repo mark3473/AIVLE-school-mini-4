@@ -29,7 +29,7 @@ public class Book {
     @Column(length = 45)
     private String publisher;
 
-    @Column()
+    @Column(length = 2000)
     private String coverImg;
 
     @Enumerated(EnumType.STRING)
