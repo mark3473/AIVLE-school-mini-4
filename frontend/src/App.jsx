@@ -9,9 +9,14 @@ import BookListPage from './pages/BookListPage';
 import SearchPage from './pages/SearchPage';
 import Layout from './components/Layout';
 import ChangePasswordPage from "./pages/ChangePasswordPage.jsx";
+import axios from 'axios';
 
 function App() {
     const [books, setBooks] = useState([]);
+
+    const fetchBooks = () => {
+        axios.get('/api/books').then(res => setBooks(res.data));
+    };
 
     const addNewBook = (newBook) => {
         setBooks(prevBooks => [...prevBooks, { ...newBook, id: prevBooks.length + 1 }]);
@@ -26,7 +31,7 @@ function App() {
 
                 {/* 사이드바와 헤더가 포함된 레이아웃 */}
                 <Route element={<Layout />}>
-                    <Route path="/books" element={<BookListPage books={books} setBooks={setBooks} />} />
+                    <Route path="/books" element={<BookListPage books={books} setBooks={setBooks} fetchBooks={fetchBooks} />} />
                     <Route path="/search" element={<SearchPage books={books} setBooks={setBooks} />} />
                     <Route path="/new-book" element={<NewBookPage addNewBook={addNewBook} />} />
                     <Route path="/book/:id" element={<BookDetailPage books={books} />} />

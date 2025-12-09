@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import BookCard from "../components/BookCard";
 import "./SearchPage.css";
 
-function SearchPage({ books = [], setBooks }) {
+function SearchPage({books = [], setBooks}) {
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [searched, setSearched] = useState(false);
