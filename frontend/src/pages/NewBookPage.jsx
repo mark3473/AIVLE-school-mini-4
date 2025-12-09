@@ -62,7 +62,7 @@ function NewBookPage({ addNewBook }) {
         - **스타일**: ${selectedStyle}
         - **품질**: ${selectedQuality}
 
-        이 정보를 바탕으로 도서의 느낌에 잘 맞는 창의적인 표지를 디자인해 주세요. 표지는 하나의 대표 이미지로 생성해 주시기 바랍니다.`;
+        이 정보를 바탕으로 도서의 정면 표지를 디자인해 주세요.`;
 
             const response = await fetch('https://api.openai.com/v1/images/generations', {
                 method: 'POST',

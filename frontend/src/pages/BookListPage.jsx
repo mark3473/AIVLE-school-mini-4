@@ -6,7 +6,7 @@ import axios from 'axios';
 import './BookListPage.css';
 
 function BookListPage({books, setBooks}) {
-    const [searchTerm, setSearchTerm] = useState('');
+    const [searchTerm] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedBook, setSelectedBook] = useState(null);
 
