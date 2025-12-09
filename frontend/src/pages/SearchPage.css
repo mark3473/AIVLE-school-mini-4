@@ -1,7 +1,9 @@
 .search-page {
   width: 100%;
-  max-width: 1200px;
+  max-width: 900px;
   margin: 0 auto;
+  padding: 40px 20px;      /* ← 좌우 패딩 줄이기 */
+  box-sizing: border-box;  /* ← 패딩 포함해서 width 계산 */
 }
 
 .search-header {
@@ -9,21 +11,32 @@
 }
 
 .search-header h1 {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   color: #2c3e50;
   font-size: 2.5rem;
   font-weight: 700;
 }
 
+.search-description {
+  color: #7f8c8d;
+  font-size: 1.1rem;
+}
+
 .search-form {
+  margin-bottom: 3rem;
+}
+
+.search-input-wrapper {
   display: flex;
   gap: 1rem;
   width: 100%;
-  max-width: 800px;
+  max-width: none;
+  align-items: stretch;
 }
 
 .search-input {
   flex: 1;
+  min-width: 0;
   padding: 1.2rem 1.5rem;
   font-size: 1.1rem;
   border: 2px solid #e0e0e0;
@@ -48,6 +61,8 @@
   font-weight: 600;
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .btn-search:hover {
@@ -71,22 +86,37 @@
   margin-top: 2rem;
 }
 
-.search-results h2 {
+.results-title {
   margin-bottom: 2rem;
   color: #34495e;
   font-size: 1.8rem;
   font-weight: 600;
 }
 
+.result-count {
+  color: #3498db;
+  font-size: 1.6rem;
+}
+
 .book-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2rem;
+  width: 100%;
 }
 
 .no-results {
   text-align: center;
   padding: 4rem;
   color: #95a5a6;
+}
+
+.no-results p {
   font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.no-results-subtitle {
+  font-size: 1rem;
+  color: #bdc3c7;
 }
