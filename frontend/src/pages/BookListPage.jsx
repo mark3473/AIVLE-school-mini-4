@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import BookCard from '../components/BookCard';
 import BookDetailModal from '../components/BookDetailModal';
-import axios from 'axios';
 import { Modal, Box, Typography, TextField, Grid, Container } from '@mui/material';
+import axios from 'axios';
+import './BookListPage.css'; // CSS 따로 관리
 
 function BookListPage() {
     const [books, setBooks] = useState([]);
@@ -10,19 +11,10 @@ function BookListPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedBook, setSelectedBook] = useState(null);
 
-    function fetchBooks() {
-        axios.get('/api/books')
-            .then(response => {
-                console.log("서버에서 받은 책 데이터:", response.data);
-                setBooks(response.data);
-            })
-            .catch(err => {
-                console.error("도서 불러오기 실패:", err);
-            });
-    }
-
     useEffect(() => {
-        fetchBooks();
+        axios.get('/api/books')
+            .then(response => setBooks(response.data))
+            .catch(err => console.error("도서 불러오기 실패:", err));
     }, []);
 
     const filteredBooks = books.filter(book =>
@@ -41,9 +33,10 @@ function BookListPage() {
     };
 
     const handleDelete = (bookId) => {
+        if (!window.confirm("정말 삭제하시겠습니까?")) return;
+
         axios.delete(`/api/books/${bookId}`)
-            .then(response => {
-                console.log("삭제 성공:", response.data);
+            .then(() => {
                 setBooks(prev => prev.filter(b => b.id !== bookId));
                 closeModal();
             })
@@ -54,31 +47,26 @@ function BookListPage() {
     };
 
     return (
-        <Box sx={{ width: "100%" }}>
-            {/* 중앙 컨텐츠 */}
-            <Container maxWidth="md" sx={{ mt: 4, mb: 6 }}>
-                <Typography variant="h4" gutterBottom>
-                    도서 목록
-                </Typography>
-
-                {/* 검색창 */}
+        <div className="main-content" style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 60px)' }}>
+            {/* 검색창 고정 */}
+            <div style={{ padding: '16px', backgroundColor: '#fff', position: 'sticky', top: 0, zIndex: 10 }}>
                 <TextField
                     label="검색어 입력"
                     variant="outlined"
                     fullWidth
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    sx={{ mb: 3 }}
                 />
+            </div>
 
-                {/* 도서 카드 리스트 */}
+            {/* 카드 리스트 영역 스크롤 */}
+            <div style={{ flex: 1, overflowY: 'auto', padding: '16px', backgroundColor: '#fafafa' }}>
                 <Grid container spacing={3}>
                     {filteredBooks.length > 0 ? (
                         filteredBooks.map(book => (
                             <Grid item xs={12} sm={6} md={4} key={book.id}>
                                 <BookCard
                                     book={book}
-                                    setBooks={setBooks}
                                     onClick={() => openModal(book)}
                                 />
                             </Grid>
@@ -89,8 +77,9 @@ function BookListPage() {
                         </Grid>
                     )}
                 </Grid>
-            </Container>
+            </div>
 
+            {/* 모달 */}
             <Modal open={isModalOpen} onClose={closeModal}>
                 <BookDetailModal
                     book={selectedBook}
@@ -98,7 +87,7 @@ function BookListPage() {
                     onDelete={handleDelete}
                 />
             </Modal>
-        </Box>
+        </div>
     );
 }
 
